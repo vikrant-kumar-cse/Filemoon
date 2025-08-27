@@ -9,7 +9,7 @@ window.onload=async()=>{
       location.href = "/login";
       return;
     }
-    
+  showuserDetails()
    fetchFiles()
    fetchImage()
 }
@@ -27,6 +27,19 @@ const getToken=()=>{
 const notify = new Notyf({
   position: { x: "right", y: "top" },
 });
+
+const showuserDetails = async () => {
+  const session = await getsession();
+  if (!session) return; // safety
+
+  const fullname = document.getElementById("username");
+  const email = document.getElementById("useremail");
+
+  fullname.innerHTML = session.fullname;
+  email.innerHTML = session.email;
+};
+
+
 
 
 const toggleDrawer=()=>{
