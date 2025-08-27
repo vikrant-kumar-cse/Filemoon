@@ -81,8 +81,23 @@ const deleteFile = async (req, res) => {
         return res.status(404).json({ message: "File does not exist" });
       }
   
-      // Redirect user to Cloudinary file URL
-      res.redirect(file.url);
+      const ext = file.type.split("/").pop();
+  
+      // Force download headers
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${file.filename}.${ext}"`
+      );
+      res.setHeader("Content-Type", file.type);
+  
+      // Cloudinary se file stream karke browser ko bhejna
+      const response = await axios({
+        url: file.url,   // 👈 Cloudinary ka URL (DB me save kiya hua)
+        method: "GET",
+        responseType: "stream",
+      });
+  
+      response.data.pipe(res);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
