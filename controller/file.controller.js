@@ -83,23 +83,24 @@ const deleteFile = async (req, res) => {
   
       const ext = file.type.split("/").pop();
   
-      // Force download headers
+      // Headers to force download
       res.setHeader(
         "Content-Disposition",
         `attachment; filename="${file.filename}.${ext}"`
       );
       res.setHeader("Content-Type", file.type);
   
-      // Cloudinary se file stream karke browser ko bhejna
+      // Stream file from Cloudinary
       const response = await axios({
-        url: file.url,   // 👈 Cloudinary ka URL (DB me save kiya hua)
+        url: file.url,  //  yaha Cloudinary ka secure_url hona chahiye
         method: "GET",
         responseType: "stream",
       });
   
       response.data.pipe(res);
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      console.error("Download error:", err.message);
+      res.status(500).json({ message: "Failed to download file", error: err.message });
     }
   };
   
