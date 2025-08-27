@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    
+</head>
+<body>
+    <div class="bg-gray-200 min-h-screen flex justify-center items-center animate__animated animate_fadeIn">
+        <div class="p-8 w-5/12 bg-white rounded-xl flex flex-col items-center gap-8 animate__animated animate__pulse">
+            <div class="flex items-center gap-2">
+                <i class="ri-contrast-2-fill text-5xl text-violet-700"></i>
+                <h1 class="text-3xl font-semibold">Filemoon</h1>
+            </div>
+
+            <form class="w-full space-y-8" onsubmit="signup(event)">
+
+                <div class="flex flex-col gap-2">
+                    <label for="text" class="text-sm font-medium text-gray-700">FullName</label>
+                    <input 
+                      id="text"
+                      class="p-3 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition" 
+                      name="text"
+                      placeholder="Enter Your Name" 
+                      required 
+                      type="text"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+                    <input 
+                      id="email"
+                      class="p-3 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition" 
+                      name="email"
+                      placeholder="Enter your email" 
+                      required 
+                      type="email"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label for="Phone" class="text-sm font-medium text-gray-700">Mobile</label>
+                    <input 
+                      id="Phone"
+                      class="p-3 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition" 
+                      name="Phone"
+                      placeholder="Enter your Mobile Number" 
+                      required 
+                      type="phone"
+                    />
+                </div>
+
+
+                <div class="flex flex-col gap-2">
+                    <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                    <input 
+                      id="password"
+                      class="p-3 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition" 
+                      name="password"
+                      placeholder="Enter your password" 
+                      required 
+                      type="password"
+                    />
+                </div>
+                
+                <button 
+                  class="p-3 rounded-lg bg-violet-600 w-full text-white text-lg font-semibold shadow-md hover:bg-violet-700 hover:shadow-lg transition duration-200">
+                  Sign in
+                </button>
+            </form>
+
+            <div class="flex flex-item-center gap-2">
+              <p>Already Have an Account</p>
+              <a href="index.html" class="text-green-500 font-medium">signin</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/env.js"></script>
+    <script src="js/session.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>
