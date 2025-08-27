@@ -12,7 +12,7 @@ const app = express()
 const path = require('path')
 
 const { v4: uniqueId } = require('uuid')
-const cors = require('cors')
+
 const multer = require('multer')
 
 // const storage = multer.diskStorage({
