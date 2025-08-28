@@ -73,21 +73,31 @@ const deleteFile = async (req, res) => {
   }
 
   const downloadFile = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const file = await FileModel.findById(id);
-  
-      if (!file) {
-        return res.status(404).json({ message: "File does not exist" });
-      }
-  
-      // Redirect user to Cloudinary file URL
-      res.redirect(file.url);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+    try 
+    {
+        const { id } = req.params
+        const file = await FileModel.findById(id)
+        const extn = file.type.split('/').pop()
+        if(!file)
+            return res.status(500).json({message: " file not found!"})
+
+        // const filePath = file.path
+
+        // res.setHeader('Content-Disposition',`attachment; filename="${file.filename}.${extn}"` );
+
+        // res.sendFile(filePath , (err)=>{
+        //     if(err)
+        //         throw new Error("Failed to download the file")
+        // })
+
+        return res.redirect(file.path); 
     }
-  };
-  
+    catch(err)
+    {
+        res.status(500).json({message : err.message})
+    }
+}
+
 module.exports={
     createFile,
     Fetchfile,

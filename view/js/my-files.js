@@ -174,39 +174,33 @@ const deleteFile=async(id)=>{
 }
 
 
-const downloadFile=async(id,filename,button)=>{
-  try{
-    button.innerHTML='<i class="ri-loader-fill"></i>'
-    button.disabled=true
-    const option={
-      responseType:'blob',
-      ...getToken()
-    }
-     const {data}=await axios.get(`/api/file/download/${id}`,option)
-     const ext= data.type.split("/").pop()
-     const url= URL.createObjectURL(data)
-     const a= document.createElement("a")
-     a.href=url
-     a.download=`${filename}.${ext}`
-     a.click()
-     a.remove()
-     
-  }
-  catch(err)
-  {
-    if(!err.response)
-      return notify.error(err.message)
+const downloadFile = async (id, name, button) => {
+  try {
+      button.innerHTML = '<i class="ri-loader-2-line"></i>'
+      button.disabled = true
+      const options = { responseType: 'blob' };
+      const { data } = await axios.get(`/api/file/download/${id}`, options);
 
-    const error= await (err.response.data).text()
-    const {modified}= JSON.parse(error)
-    notify.error(message)
+      const extn = data.type ? data.type.split("/").pop() : name;
+      const fileName = extn ? `${name}.${extn}` : '';
+
+      const url = URL.createObjectURL(data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a); 
+      a.click();
+      document.body.removeChild(a);
+
+      URL.revokeObjectURL(url);
+  } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
   }
-  finally
-  {
-    button.innerHTML='<i class="ri-download-line"></i>'
-    button.disabled=false
+  finally {
+      button.innerHTML = '<i class="ri-download-2-line"></i>'
+      button.disabled = false
   }
-}
+};
 
 
 const openModalForShare = (id, filename)=>{
