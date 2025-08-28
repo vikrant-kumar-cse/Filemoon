@@ -176,31 +176,37 @@ const deleteFile=async(id)=>{
 
 const downloadFile = async (id, name, button) => {
   try {
-      button.innerHTML = '<i class="ri-loader-2-line"></i>'
-      button.disabled = true
-      const options = { responseType: 'blob' };
-      const { data } = await axios.get(`/api/file/download/${id}`, options);
+    button.innerHTML = '<i class="ri-loader-2-line animate-spin"></i>';
+    button.disabled = true;
 
-      const extn = data.type ? data.type.split("/").pop() : name;
-      const fileName = extn ? `${name}.${extn}` : '';
+    // API call
+    const response = await axios.get(`/api/file/download/${id}`, {
+      ...getToken(),
+      responseType: "blob", // force blob response
+    });
 
-      const url = URL.createObjectURL(data);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a); 
-      a.click();
-      document.body.removeChild(a);
+    // Blob create
+    const blob = new Blob([response.data], { type: response.data.type });
+    const url = URL.createObjectURL(blob);
 
-      URL.revokeObjectURL(url);
+    // Anchor element banake auto click
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;   // filename as it is (no double extension)
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    // Cleanup
+    URL.revokeObjectURL(url);
   } catch (err) {
-      notify.error(err.response?.data?.message || err.message);
-  }
-  finally {
-      button.innerHTML = '<i class="ri-download-2-line"></i>'
-      button.disabled = false
+    notify.error(err.response?.data?.message || err.message);
+  } finally {
+    button.innerHTML = '<i class="ri-download-line"></i>';
+    button.disabled = false;
   }
 };
+
 
 
 const openModalForShare = (id, filename)=>{
