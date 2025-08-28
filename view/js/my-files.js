@@ -194,7 +194,7 @@ const downloadFile = async (id, name, button) => {
 
       URL.revokeObjectURL(url);
   } catch (err) {
-      toast.error(err.response?.data?.message || err.message);
+      notify.error(err.response?.data?.message || err.message);
   }
   finally {
       button.innerHTML = '<i class="ri-download-2-line"></i>'
